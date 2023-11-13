@@ -1,99 +1,80 @@
-#include  "shell.h"
+#include "shell.h"
 
-/**
- * get_line - reads a line from the prompt.
- * @data: structure for the  shells data
- *
- * Return: counting bytes
- */
+#define MAX_COMMANDS 10
+#define MAX_OPERATORS 10
 
-int get_line(program_data *data)
-{
-	char buff[BUFFER_SIZE] = {'\0'};
-	static char *commands_array[10] = {NULL};
-	static char operator_array[10] = {'\0'};
-	ssize_t read_byte, x = 0;
+int readCommandLine(ProgramData *data);
+void freeCommandArray(char *commandArray[], int size);
+int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]);
+void shiftArrayElements(char *commandArray[], char operatorArray[], int size);
+int findLogicalOperators(char *command);
 
-	/*Chech if there are no more commands in the array*/
-	/* Also, validate the logical operators*/
-	if (commands_array[0] || (operator_array[0] == '&' && error_no != 0) ||
-			(operator_array[0] == '|' && error_no == 0))
-	{
-		/* if the  array exists free its allocated memory*/
-		while (commands_arrary[x] != NULL)
-		{
-			free(commands_array[x]);
-			commands_array[x] = NULL;
-			x++;
-		}
-	}
-	/* Read data from the file descriptor 'int' into the 'buf' buffer. */
-	read_byte = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
-	if (read_byte == 0)
-		return (-1);
-	/* seperate lines for \n or ; */
-	x = 0;
-	while (commands_array[x])
-	{
-		commands_array[x] = duplicate_str(_strtok(x ? NULL : buff, " \n;"));
-		/* checks for && and || operations */
-		x = logic_ops_checks(commands_array, x operator_array);
-		x++;
-	}
-	/* obtains the next command and removes it form the array */
-	data->line_input = commands_array[0];
-	for (x = 0; commands_array[x]; x++)
-	{
-		commands_array[x] = commands_array[x + 1];
-		operator_array[x] = operator_array[x + 1];
-	}
-	return (str_length(data->line_input));
+int readCommandLine(ProgramData *data) {
+    char buffer[BUFFER_SIZE] = {'\0'};
+    char *commandArray[MAX_COMMANDS] = {NULL};
+    char operatorArray[MAX_OPERATORS] = {'\0'};
+    ssize_t bytesRead;
+    int x = 0;
+
+    if (commandArray[0] || (operatorArray[0] == '&' && data->errorNo != 0) ||
+        (operatorArray[0] == '|' && data->errorNo == 0)) {
+        freeCommandArray(commandArray, MAX_COMMANDS);
+    }
+
+    bytesRead = read(data->file_descriptor, buffer, BUFFER_SIZE - 1);
+    if (bytesRead == 0) {
+        return -1;
+    }
+
+    x = parseAndSplitCommands(commandArray, operatorArray, buffer);
+
+    data->line_input = commandArray[0];
+    shiftArrayElements(commandArray, operatorArray, MAX_COMMANDS);
+
+    return strLength(data->line_input);
 }
 
-/**
- * logic_ops_checks - checks for && and || operations
- * @commands_array: command array
- * @x: index in commands_array being checked
- * @operator_array: array of logical operations for the previous commands
- *
- * Return: index of the last command in commands_array
- **/
+void freeCommandArray(char *commandArray[], int size) {
+    for (int i = 0; i < size; i++) {
+        if (commandArray[i] != NULL) {
+            free(commandArray[i]);
+            commandArray[i] = NULL;
+        }
+    }
+}
 
-int logic_ops_checks(char *commands_array[], int x, char operator_array[])
-{
-	char *tmp = NULL;
-	int y;
+int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]) {
+    int x = 0;
+    char *token;
 
-	/* checks for char in command line*/
-	y = 0;
-	while (commands_array[x] != NULL && commands_array[x][y])
-	{
-		if (commands_array[x][y] == '&' && commands_array[x][y + 1] == '&')
-		{
-			/*seperates the line when "&&" is found */
+    // Tokenize the input buffer
+    token = strtok(buffer, " \n;");
+    while (token != NULL) {
+        commandArray[x] = duplicateStr(token);
+        operatorArray[x] = findLogicalOperators(commandArray[x]);
+        token = strtok(NULL, " \n;");
+        x++;
+    }
 
-			char *tmp commands_array[x];
-			commands_array[x][y] = '\0';
-			commands_array[x] = duplicate_str(commands_array[x]);
-			commands_array[x + 1] = duplicate_str(tmp + y + 2);
-			operator_array[x] == '&';
-			x++;
-			free(tmp);
-			y = 0;
-		}
-		y++;
-		if (commands_array[x][y] == '|' && commands_arra[x][y + 1] == '|')
-		{
-			/* seperate the line when || is found */
-			tmp = commands_array[x];
-			commands_array[x][y] = '\0';
-			commands_array[x] = duplicate_str(commands_array[x]);
-			commands_array[x + 1] = duplicate_str(tmp + y + 2);
-			x++;
-			operator_array[x] = '|';
-			free(tmp);
-			y = 0;
-		}
-	}
-	return (x);
+    return x;
+}
+
+int findLogicalOperators(char *command) {
+    int i = 0;
+    while (command[i] != '\0') {
+        if (command[i] == '&' && command[i + 1] == '&') {
+            return '&';
+        } else if (command[i] == '|' && command[i + 1] == '|') {
+            return '|';
+        }
+        i++;
+    }
+    return '\0';
+}
+
+void shiftArrayElements(char *commandArray[], char operatorArray[], int size) {
+    for (int i = 0; i < size; i++) {
+        commandArray[i] = commandArray[i + 1];
+        operatorArray[i] = operatorArray[i + 1];
+    }
 }
