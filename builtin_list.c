@@ -20,26 +20,26 @@ int builtins_list(data_of_program *data)
 		{NULL, NULL}
 	};
 
-/*walk through the structure*/
+	/*walk through the structure*/
 	iterator = 0;
-while (options[iterator].builtin != NULL)
-{
-    if (str_compare(options[iterator].builtin, data->command_name, 0))
-    {
-        switch (iterator)
-        {
-            case 0:
-                return option_0_function(data);
-            // Add more cases for each option if needed
-            // case 1:
-            //     return option_1_function(data);
-            // ...
-            default:
-                return -1;
-        }
-    }
-    iterator++;
-}
+	while (options[iterator].builtin != NULL)
+	{
+		if (str_compare(options[iterator].builtin, data->command_name, 0))
+		{
+			switch (iterator)
+			{
+				case 0:
+					return option_0_function(data);
+					// Add more cases for each option if needed
+					// case 1:
+					//     return option_1_function(data);
+					// ...
+				default:
+					return -1;
+			}
+		}
+		iterator++;
+	}
 
 	return (-1);
 }

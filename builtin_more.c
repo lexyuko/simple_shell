@@ -13,7 +13,7 @@ int builtin_exit(data_of_program *data)
 	{/*if exists arg for exit, check if is a number*/
 		for (t = 0; data->tokens[1][t]; t++)
 			if ((data->tokens[1][t] < '0' || data->tokens[1][t] > '9')
-				&& data->tokens[1][t] != '+')
+					&& data->tokens[1][t] != '+')
 			{/*if is not a number*/
 				errno = 2;
 				return (2);

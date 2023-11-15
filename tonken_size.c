@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "shell.h"
 
 /**
  * tokenize - Tokenizes the input string, separating it into an array of tokens using a specified delimiter.
@@ -18,59 +16,59 @@
 
 void tokenize(data_of_program *data)
 {
-    const char *delimiter = " \t";
-    char *token, *input_copy;
-    int counter = 0;
+	const char *delimiter = " \t";
+	char *token, *input_copy;
+	int counter = 0;
 
-    // Remove newline character if present
-    size_t length = str_length(data->input_line);
-    if (length > 0 && data->input_line[length - 1] == '\n')
-        data->input_line[length - 1] = '\0';
+	// Remove newline character if present
+	size_t length = str_length(data->input_line);
+	if (length > 0 && data->input_line[length - 1] == '\n')
+		data->input_line[length - 1] = '\0';
 
-    // Count the number of tokens
-    input_copy = str_duplicate(data->input_line);
-    if (input_copy == NULL)
-    {
-        perror(data->program_name);
-        exit(errno);
-    }
+	// Count the number of tokens
+	input_copy = str_duplicate(data->input_line);
+	if (input_copy == NULL)
+	{
+		perror(data->program_name);
+		exit(errno);
+	}
 
-    token = _strtok(input_copy, delimiter);
-    while (token != NULL)
-    {
-        counter++;
-        token = _strtok(NULL, delimiter);
-    }
+	token = _strtok(input_copy, delimiter);
+	while (token != NULL)
+	{
+		counter++;
+		token = _strtok(NULL, delimiter);
+	}
 
-    free(input_copy);
+	free(input_copy);
 
-    // Allocate memory for tokens
-    data->tokens = malloc((counter + 1) * sizeof(char *));
-    if (data->tokens == NULL)
-    {
-        perror(data->program_name);
-        exit(errno);
-    }
+	// Allocate memory for tokens
+	data->tokens = malloc((counter + 1) * sizeof(char *));
+	if (data->tokens == NULL)
+	{
+		perror(data->program_name);
+		exit(errno);
+	}
 
-    // Tokenize the input
-    token = _strtok(data->input_line, delimiter);
-    counter = 0;
-    while (token != NULL)
-    {
-        data->tokens[counter] = str_duplicate(token);
-        if (data->tokens[counter] == NULL)
-        {
-            perror(data->program_name);
-            exit(errno);
-        }
+	// Tokenize the input
+	token = _strtok(data->input_line, delimiter);
+	counter = 0;
+	while (token != NULL)
+	{
+		data->tokens[counter] = str_duplicate(token);
+		if (data->tokens[counter] == NULL)
+		{
+			perror(data->program_name);
+			exit(errno);
+		}
 
-        counter++;
-        token = _strtok(NULL, delimiter);
-    }
+		counter++;
+		token = _strtok(NULL, delimiter);
+	}
 
-    // Set the last element of the tokens array to NULL
-    data->tokens[counter] = NULL;
+	// Set the last element of the tokens array to NULL
+	data->tokens[counter] = NULL;
 
-    // Set the command name
-    data->command_name = (counter > 0) ? str_duplicate(data->tokens[0]) : NULL;
+	// Set the command name
+	data->command_name = (counter > 0) ? str_duplicate(data->tokens[0]) : NULL;
 }

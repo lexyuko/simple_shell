@@ -32,14 +32,14 @@
  */
 typedef struct info
 {
-    char *program_name;
-    char *input_line;
-    char *command_name;
-    int exec_counter;
-    int file_descriptor;
-    char **tokens;
-    char **env;
-    char **alias_list;
+	char *program_name;
+	char *input_line;
+	char *command_name;
+	int exec_counter;
+	int file_descriptor;
+	char **tokens;
+	char **env;
+	char **alias_list;
 } data_of_program;
 
 /**
@@ -49,8 +49,8 @@ typedef struct info
  */
 typedef struct builtins
 {
-    char *builtin;
-    int (*function)(data_of_program *data);
+	char *builtin;
+	int (*function)(data_of_program *data);
 } builtins;
 
 /************* MAIN FUNCTIONS *************/
@@ -66,10 +66,10 @@ void sisifo(char *prompt, data_of_program *data);
 /* Print the prompt in a new line */
 void handle_ctrl_c(int opr UNUSED);
 
-/*========  _getline.c  ========*/
+/*========  get-line.c  ========*/
 
 /* Read one line of the standar input*/
-int readCommandLine(ProgramData *data);
+int readCommandLine(data_of_program *data);
 
 /* split the each line for the logical operators if it exist */
 int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]);
@@ -153,86 +153,86 @@ int builtin_alias(data_of_program *data);
 /*handle equal sign if present in evnvironment*/
 void handleEqualSign(size_t index, char *cpname, data_of_program *data)
 
-    /*handle equal sign if not present*/
-    void handleNoEqualSign(data_of_program *data)
+	/*handle equal sign if not present*/
+void handleNoEqualSign(data_of_program *data)
 
-    /* Shows the environment where the shell runs */
-    int builtin_env(data_of_program *data);
+	/* Shows the environment where the shell runs */
+	int builtin_env(data_of_program *data);
 
-/* create or override a variable of environment */
-int builtin_set_env(data_of_program *data);
+	/* create or override a variable of environment */
+	int builtin_set_env(data_of_program *data);
 
-/* delete a variable of environment */
-int builtin_unset_env(data_of_program *data);
+	/* delete a variable of environment */
+	int builtin_unset_env(data_of_program *data);
 
-/************** HELPERS FOR ENVIRONMENT VARIABLES MANAGEMENT **************/
+	/************** HELPERS FOR ENVIRONMENT VARIABLES MANAGEMENT **************/
 
-/*======== env_management.c ========*/
+	/*======== env_management.c ========*/
 
-/* Gets the value of an environment variable */
-char *env_get_key(char *name, data_of_program *data);
+	/* Gets the value of an environment variable */
+	char *env_get_key(char *name, data_of_program *data);
 
-/* Overwrite the value of the environment variable */
-int env_set_key(char *key, char *value, data_of_program *data);
+	/* Overwrite the value of the environment variable */
+	int env_set_key(char *key, char *value, data_of_program *data);
 
-/* Remove a key from the environment */
-int env_remove_key(char *key, data_of_program *data);
+	/* Remove a key from the environment */
+	int env_remove_key(char *key, data_of_program *data);
 
-/* prints the current environ */
-void print_environ(data_of_program *data);
+	/* prints the current environ */
+	void print_environ(data_of_program *data);
 
-/************** HELPERS FOR PRINTING **************/
+	/************** HELPERS FOR PRINTING **************/
 
-/*======== helpers_print.c ========*/
+	/*======== helpers_print.c ========*/
 
-/* Prints a string in the standar output */
-int _print(char *string);
+	/* Prints a string in the standar output */
+	int _print(char *string);
 
-/* Prints a string in the standar error */
-int _printe(char *string);
+	/* Prints a string in the standar error */
+	int _printe(char *string);
 
-/* Prints a string in the standar error */
-int _print_error(int errorcode, data_of_program *data);
+	/* Prints a string in the standar error */
+	int _print_error(int errorcode, data_of_program *data);
 
-/************** HELPERS FOR STRINGS MANAGEMENT **************/
+	/************** HELPERS FOR STRINGS MANAGEMENT **************/
 
-/*======== helpers_string.c ========*/
+	/*======== helpers_string.c ========*/
 
-/* Counts the number of characters of a string */
-int str_length(char *string);
+	/* Counts the number of characters of a string */
+	int str_length(char *string);
 
-/* Duplicates an string */
-char *str_duplicate(char *string);
+	/* Duplicates an string */
+	char *str_duplicate(char *string);
 
-/* Compares two strings */
-int str_compare(char *string1, char *string2, int number);
+	/* Compares two strings */
+	int str_compare(char *string1, char *string2, int number);
 
-/* Concatenates two strings */
-char *str_concat(char *string1, char *string2);
+	/* Concatenates two strings */
+	char *str_concat(char *string1, char *string2);
 
-/* Reverse a string */
-void str_reverse(char *string);
+	/* Reverse a string */
+	void str_reverse(char *string);
 
-/*======== helpers_numbers.c ========*/
+	/*======== helpers_numbers.c ========*/
 
-/* Cast from int to string */
-void long_to_string(long number, char *string, int base);
+	/* Cast from int to string */
+	void long_to_string(long number, char *string, int base);
 
-/* convert an string in to a number */
-int _atoi(char *s);
+	/* convert an string in to a number */
+	int _atoi(char *s);
 
-/* count the coincidences of character in string */
-int count_characters(char *string, char *character);
+	/* count the coincidences of character in string */
+	int count_characters(char *string, char *character);
 
-/*======== alias_management.c ========*/
+	/*======== alias_management.c ========*/
 
-/* print the list of alias */
-int print_alias(data_of_program *data, char *alias);
+	/* print the list of alias */
+	int print_alias(data_of_program *data, char *alias);
 
-/* get the alias name */
-char *get_alias(data_of_program *data, char *alias);
+	/* get the alias name */
+	char *get_alias(data_of_program *data, char *alias);
 
-/* set the alias name */
-int set_alias(char *alias_string, data_of_program *data);
+	/* set the alias name */
+	int set_alias(char *alias_string, data_of_program *data);
 
 #endif /* SHELL_H */

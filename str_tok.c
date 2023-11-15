@@ -9,36 +9,36 @@
 
 char *_strtok(char **str, const char *delim)
 {
-    if (!str || !(*str))
-        return NULL;
+	if (!str || !(*str))
+		return NULL;
 
-    char *start = *str;
-    char *token = NULL;
+	char *start = *str;
+	char *token = NULL;
 
-    // Find the beginning of the next token
-    while (*start && strchr(delim, *start))
-        start++;
+	// Find the beginning of the next token
+	while (*start && strchr(delim, *start))
+		start++;
 
-    // Return NULL if no more tokens
-    if (!*start)
-    {
-        *str = NULL;
-        return NULL;
-    }
+	// Return NULL if no more tokens
+	if (!*start)
+	{
+		*str = NULL;
+		return NULL;
+	}
 
-    token = start;
+	token = start;
 
-    // Find the end of the token
-    while (*start && !strchr(delim, *start))
-        start++;
+	// Find the end of the token
+	while (*start && !strchr(delim, *start))
+		start++;
 
-    if (*start)
-    {
-        *start = '\0';
-        start++;
-    }
+	if (*start)
+	{
+		*start = '\0';
+		start++;
+	}
 
-    *str = start;
+	*str = start;
 
-    return token;
+	return token;
 }

@@ -9,24 +9,24 @@
  */
 int main(int argc, char *argv[], char *env[])
 {
-    ProgramData dataStruct = {NULL}, *data = &dataStruct;
-    char *prompt = "";
+	ProgramData dataStruct = {NULL}, *data = &dataStruct;
+	char *prompt = "";
 
-    initializeData(data, argc, argv, env);
+	initializeData(data, argc, argv, env);
 
-    signal(SIGINT, handleCtrlC);
+	signal(SIGINT, handleCtrlC);
 
-    if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) && argc == 1)
-    {
-        /* We are in the terminal, interactive mode */
-        errno = 2; /* ???? */
-        prompt = PROMPT_MSG;
-    }
+	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) && argc == 1)
+	{
+		/* We are in the terminal, interactive mode */
+		errno = 2; /* ???? */
+		prompt = PROMPT_MSG;
+	}
 
-    errno = 0;
-    sisifo(prompt, data);
+	errno = 0;
+	sisifo(prompt, data);
 
-    return 0;
+	return (0);
 }
 
 /**
@@ -35,8 +35,8 @@ int main(int argc, char *argv[], char *env[])
  */
 void handleCtrlC(int signal UNUSED)
 {
-    _print("\n");
-    _print(PROMPT_MSG);
+	_print("\n");
+	_print(PROMPT_MSG);
 }
 
 /**
@@ -48,57 +48,57 @@ void handleCtrlC(int signal UNUSED)
  */
 void initializeData(ProgramData *data, int argc, char *argv[], char **env)
 {
-    int i = 0;
+	int i = 0;
 
-    data->programName = argv[0];
-    data->inputLine = NULL;
-    data->commandName = NULL;
-    data->execCounter = 0;
+	data->programName = argv[0];
+	data->inputLine = NULL;
+	data->commandName = NULL;
+	data->execCounter = 0;
 
-    /* Define the file descriptor to be read */
-    switch (argc)
-    {
-    case 1:
-        data->fileDescriptor = STDIN_FILENO;
-        break;
+	/* Define the file descriptor to be read */
+	switch (argc)
+	{
+		case 1:
+			data->fileDescriptor = STDIN_FILENO;
+			break;
 
-    case 2:
-        data->fileDescriptor = open(argv[1], O_RDONLY);
-        if (data->fileDescriptor == -1)
-        {
-            _printe(data->programName);
-            _printe(": 0: Can't open ");
-            _printe(argv[1]);
-            _printe("\n");
-            exit(127);
-        }
-        break;
+		case 2:
+			data->fileDescriptor = open(argv[1], O_RDONLY);
+			if (data->fileDescriptor == -1)
+			{
+				_printe(data->programName);
+				_printe(": 0: Can't open ");
+				_printe(argv[1]);
+				_printe("\n");
+				exit(127);
+			}
+			break;
 
-    default:
-        _printe("Usage: ");
-        _printe(data->programName);
-        _printe(" [file]\n");
-        exit(1);
-    }
+		default:
+			_printe("Usage: ");
+			_printe(data->programName);
+			_printe(" [file]\n");
+			exit(1);
+	}
 
-    data->tokens = NULL;
+	data->tokens = NULL;
 
-    data->env = malloc(sizeof(char *) * 50);
-    if (env)
-    {
-        for (; env[i]; i++)
-        {
-            data->env[i] = strDuplicate(env[i]);
-        }
-    }
-    data->env[i] = NULL;
-    env = data->env;
+	data->env = malloc(sizeof(char *) * 50);
+	if (env)
+	{
+		for (; env[i]; i++)
+		{
+			data->env[i] = strDuplicate(env[i]);
+		}
+	}
+	data->env[i] = NULL;
+	env = data->env;
 
-    data->aliasList = malloc(sizeof(char *) * 20);
-    for (i = 0; i < 20; i++)
-    {
-        data->aliasList[i] = NULL;
-    }
+	data->aliasList = malloc(sizeof(char *) * 20);
+	for (i = 0; i < 20; i++)
+	{
+		data->aliasList[i] = NULL;
+	}
 }
 
 /**
@@ -108,25 +108,25 @@ void initializeData(ProgramData *data, int argc, char *argv[], char **env)
  */
 void sisifo(char *prompt, ProgramData *data)
 {
-    int errorCode = 0, stringLen = 0;
+	int errorCode = 0, stringLen = 0;
 
-    for (data->execCounter = 1;; ++(data->execCounter))
-    {
-        _print(prompt);
-        errorCode = stringLen = _getline(data);
+	for (data->execCounter = 1;; ++(data->execCounter))
+	{
+		_print(prompt);
+		errorCode = stringLen = _getline(data);
 
-        if (errorCode == EOF)
-        {
-            freeAllData(data);
-            exit(errno); /* If EOF is the first character of the string, exit */
-        }
+		if (errorCode == EOF)
+		{
+			freeAllData(data);
+			exit(errno); /* If EOF is the first character of the string, exit */
+		}
 
-        if (stringLen >= 1)
-        {
-            processInput(data);
+		if (stringLen >= 1)
+		{
+			processInput(data);
 
-            freeRecurrentData(data);
-        }
-    }
+			freeRecurrentData(data);
+		}
+	}
 }
 }

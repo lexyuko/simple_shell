@@ -8,26 +8,26 @@
  */
 int printAlias(data_of_program *data, const char *aliasName)
 {
-    if (data->aliasList)
-    {
-        const size_t aliasNameLength = strlen(aliasName);
+	if (data->aliasList)
+	{
+		const size_t aliasNameLength = strlen(aliasName);
 
-        size_t i = 0;
-        while (data->aliasList[i])
-        {
-            const char *currentAlias = data->aliasList[i];
+		size_t i = 0;
+		while (data->aliasList[i])
+		{
+			const char *currentAlias = data->aliasList[i];
 
-            if (!aliasName || (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '='))
-            {
-                char *aliasValue = strchr(currentAlias, '=') + 1;
-                printf("'%s'='%s'\n", currentAlias, aliasValue);
-            }
+			if (!aliasName || (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '='))
+			{
+				char *aliasValue = strchr(currentAlias, '=') + 1;
+				printf("'%s'='%s'\n", currentAlias, aliasValue);
+			}
 
-            i++;
-        }
-    }
+			i++;
+		}
+	}
 
-    return 0;
+	return 0;
 }
 
 /**
@@ -38,27 +38,27 @@ int printAlias(data_of_program *data, const char *aliasName)
  */
 const char *getAlias(data_of_program *data, const char *aliasName)
 {
-    if (aliasName != NULL || data->aliasList != NULL)
-    {
-        return NULL;
-    }
+	if (aliasName != NULL || data->aliasList != NULL)
+	{
+		return NULL;
+	}
 
-    const size_t aliasNameLength = strlen(aliasName);
+	const size_t aliasNameLength = strlen(aliasName);
 
-    size_t i = 0;
-    while (data->aliasList[i])
-    {
-        const char *currentAlias = data->aliasList[i];
+	size_t i = 0;
+	while (data->aliasList[i])
+	{
+		const char *currentAlias = data->aliasList[i];
 
-        if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
-        {
-            return currentAlias + aliasNameLength + 1;
-        }
+		if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
+		{
+			return currentAlias + aliasNameLength + 1;
+		}
 
-        i++;
-    }
+		i++;
+	}
 
-    return NULL;
+	return NULL;
 }
 
 /**
@@ -69,36 +69,36 @@ const char *getAlias(data_of_program *data, const char *aliasName)
  */
 int setAlias(const char *aliasString, data_of_program *data)
 {
-    if (aliasString == NULL || data->aliasList == NULL)
-    {
-        return 1;
-    }
+	if (aliasString == NULL || data->aliasList == NULL)
+	{
+		return 1;
+	}
 
-    char aliasName[250] = {0};
-    const char *aliasValue = strchr(aliasString, '=');
+	char aliasName[250] = {0};
+	const char *aliasValue = strchr(aliasString, '=');
 
-    if (!aliasValue)
-    {
-        return 1;
-    }
+	if (!aliasValue)
+	{
+		return 1;
+	}
 
-    size_t i = 0;
-    while (data->aliasList[i])
-    {
-        char *currentAlias = data->aliasList[i];
+	size_t i = 0;
+	while (data->aliasList[i])
+	{
+		char *currentAlias = data->aliasList[i];
 
-        if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
-        {
-            free(data->aliasList[i]);
-            data->aliasList[i] = strDuplicate(aliasString);
-            return 0;
-        }
+		if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
+		{
+			free(data->aliasList[i]);
+			data->aliasList[i] = strDuplicate(aliasString);
+			return 0;
+		}
 
-        i++;
-    }
+		i++;
+	}
 
-    // If no match is found, add the new alias to the list
-    data->aliasList[data->aliasCount++] = strDuplicate(aliasString);
+	// If no match is found, add the new alias to the list
+	data->aliasList[data->aliasCount++] = strDuplicate(aliasString);
 
-    return 0;
+	return 0;
 }
