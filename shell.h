@@ -145,20 +145,14 @@ int builtin_alias(data_of_program *data);
 
 /*======== builtins_env.c ========*/
 
-/*handle equal sign if present in evnvironment*/
-void handleEqualSign(size_t index, char *cpname, data_of_program *data)
-
-	/*handle equal sign if not present*/
-void handleNoEqualSign(data_of_program *data)
-
 	/* Shows the environment where the shell runs */
-	int builtin_env(data_of_program *data);
+	int _builtin_env(data_of_program *data);
 
 	/* create or override a variable of environment */
-	int builtin_set_env(data_of_program *data);
+	int _builtin_set_env(data_of_program *data);
 
 	/* delete a variable of environment */
-	int builtin_unset_env(data_of_program *data);
+	int _builtin_unset_env(data_of_program *data);
 
 	/************** HELPERS FOR ENVIRONMENT VARIABLES MANAGEMENT **************/
 
