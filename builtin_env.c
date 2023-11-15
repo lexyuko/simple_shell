@@ -1,122 +1,92 @@
 #include "shell.h"
 
 /**
- * handleEqualSign - handle equal sign if present in evnvironment
- * @index: Index of the '=' character.
- * @cpname: Placeholder for the function's description.
- * @data: Structure for the program's data.
+ * _builtin_env - shows the environment where the shell runs
+ * @data: structure for the program's data
+ * Return: zero if success, or other number if it's declared in the arguments
  */
-void handleEqualSign(size_t index, char *cpname, data_of_program *data)
+int _builtin_env(data_of_program *data)
 {
-	char *var_copy = str_duplicate(env_get_key(cpname, data));
+	int x;
+	char c_name[50] = {'\0'};
+	char *key_copy = NULL;
 
-	if (var_copy != NULL)
-	{
-		env_set_key(cpname, data->tokens[1] + index + 1, data);
-	}
-
-	print_environ(data);
-
-	if (env_get_key(cpname, data) == NULL)
-	{
-		_print(data->tokens[1]);
-		_print("\n");
-	}
-	else
-	{
-		env_set_key(cpname, var_copy, data);
-		free(var_copy);
-	}
-}
-
-/**
- * handleNoEqualSign -handle equal sign if not present
- * @data: Structure for the program's data.
- */
-void handleNoEqualSign(data_of_program *data)
-{
-	errno = 2;
-	perror(data->command_name);
-	errno = 127;
-}
-
-/**
- * builtin_env - Displays the environment where the shell is running.
- * @data: Structure for the program's data.
- * Return: Zero on success, or another number if specified in the arguments.
- */
-int builtin_env(data_of_program *data)
-{
-	int i;
-	char cpname[50] = {'\0'};
-
-	/* if not arguments */
-	if (!data->tokens[1])
+	if (data->tokens[1] == NULL)
 	{
 		print_environ(data);
 	}
 	else
 	{
-		for (size_t i = 0; data->tokens[1][i]; i++)
+		for (x = 0; data->tokens[1][x]; x++)
 		{
-			if (data->tokens[1][i] == '=')
+			if (data->tokens[1][x] == '=')
 			{
-				// Found '=' character
-				handleEqualSign(i, cpname, data);
+				var_copy = str_duplicate(env_get_key(c_name, data));
+
+				if (var_copy != NULL)
+				{
+					env_set_key(c_name, data->tokens[1] + x + 1, data);
+				}
+
+				print_environ(data);
+
+				if (env_get_key(c_name, data) == NULL)
+				{
+					_print(data->tokens[1]);
+					_print("\n");
+				}
+				else
+				{
+					env_set_key(c_name, var_copy, data);
+					free(var_copy);
+				}
+
 				return 0;
 			}
-			cpname[i] = data->tokens[1][i];
+			c_name[x] = data->tokens[1][x];
 		}
-
-		// If '=' is not found
-		handleNoEqualSign(data);
-		return 0;
+		errno = 2;
+		perror(data->command_name);
+		errno = 127;
 	}
 
-	print_environ(data);
-	return (0);
+	return 0;
 }
+
 /**
- * builtin_set_env - Placeholder for the function's description.
- *                   Please provide a detailed explanation.
- * @data: Structure for the program's data.
- * Return: Zero on success, or another number if specified in the arguments.
+ * _builtin_set_env - sets an environment variable
+ * @data: struct for the program's data
+ * Return: zero if success, or other number if it's declared in the arguments
  */
-int builtin_set_env(data_of_program *data)
+int _builtin_set_env(data_of_program *data)
 {
-	/* validate args */
-	if (!data->tokens[1] || !data->tokens[2])
-		return (0);
-	if (data->tokens[3])
+	if (data->tokens[1] == NULL || data->tokens[2] == NULL || data->tokens[3] != NULL)
 	{
-		errno = IST0BIG;
+		errno = (data->tokens[3] != NULL) ? E2BIG : EINVAL;
 		perror(data->command_name);
-		return (5);
+		return 5;
 	}
 
 	env_set_key(data->tokens[1], data->tokens[2], data);
 
-	return (0);
+	return 0;
 }
 
 /**
- * builtin_unset_env - Placeholder for the function's description.
- *                     Please provide a detailed explanation.
- * @data: Structure for the program's data.
- * Return: ...
+ * _builtin_unset_env - unsets an environment variable
+ * @data: struct for the program's data
+ * Return: zero if success, or other number if it's declared in the arguments
  */
-int builtin_unset_env(data_of_program *data)
+int _builtin_unset_env(data_of_program *data)
 {
-	/* validate args */
-	if (!data->tokens[1])
-		return (0);
-	if (data->tokens[2])
+	if (data->tokens[1] == NULL || data->tokens[2] != NULL)
 	{
-		errno = IST0BIG;
+		errno = (data->tokens[2] != NULL) ? E2BIG : EINVAL;
 		perror(data->command_name);
-		return (5);
+		return 5;
 	}
-	env_removeKey(data->tokens[1], data);
 
-	return (0);
+	env_remove_key(data->tokens[1], data);
+
+	return 0;
 }

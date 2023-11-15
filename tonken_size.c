@@ -72,3 +72,4 @@ void tokenize(data_of_program *data)
 	// Set the command name
 	data->command_name = (counter > 0) ? str_duplicate(data->tokens[0]) : NULL;
 }
+
