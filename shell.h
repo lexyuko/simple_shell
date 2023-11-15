@@ -145,9 +145,6 @@ int builtin_alias(data_of_program *data);
 
 /*======== builtins_env.c ========*/
 
-/*handle equal sign if present in evnvironment*/
-
-
 	/* Shows the environment where the shell runs */
 	int _builtin_env(data_of_program *data);
 
@@ -155,7 +152,7 @@ int builtin_alias(data_of_program *data);
 	int _builtin_set_env(data_of_program *data);
 
 	/* delete a variable of environment */
-	int builtin_unset_env(data_of_program *data);
+	int _builtin_unset_env(data_of_program *data);
 
 	/************** HELPERS FOR ENVIRONMENT VARIABLES MANAGEMENT **************/
 
