@@ -9,13 +9,13 @@
  *
  * Return: reading counting bytes.
  */
-int readCommandLine(ProgramData *data);
+int readCommandLine(data_of_program *data);
 void freeCommandArray(char *commandArray[], int size);
 int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]);
 void shiftArrayElements(char *commandArray[], char operatorArray[], int size);
 int findLogicalOperators(char *command);
 
-int readCommandLine(ProgramData *data)
+int readCommandLine(data_of_program *data)
 {
     char buffer[BUFFER_SIZE] = {'\0'};
     char *commandArray[MAX_COMMANDS] = {NULL};

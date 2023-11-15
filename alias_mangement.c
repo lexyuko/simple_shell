@@ -6,7 +6,7 @@
  * @aliasName: Name of the alias to be printed.
  * Return: 0 if successful, otherwise an error code.
  */
-int printAlias(ProgramData *data, const char *aliasName)
+int printAlias(data_of_program *data, const char *aliasName)
 {
     if (data->aliasList)
     {
@@ -36,7 +36,7 @@ int printAlias(ProgramData *data, const char *aliasName)
  * @aliasName: Name of the requested alias.
  * Return: The alias value if found, NULL otherwise.
  */
-const char *getAlias(ProgramData *data, const char *aliasName)
+const char *getAlias(data_of_program *data, const char *aliasName)
 {
     if (aliasName != NULL || data->aliasList != NULL)
     {
@@ -67,7 +67,7 @@ const char *getAlias(ProgramData *data, const char *aliasName)
  * @data: Structure for program's data.
  * Return: 0 if successful, otherwise an error code.
  */
-int setAlias(const char *aliasString, ProgramData *data)
+int setAlias(const char *aliasString, data_of_program *data)
 {
     if (aliasString == NULL || data->aliasList == NULL)
     {

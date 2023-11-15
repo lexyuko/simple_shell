@@ -98,7 +98,7 @@ void tokenize(data_of_program *data);
 /* Creates a pointer to a part of a string */
 char *_strtok(char *line, char *delim);
 
-/*======== execute.c ========*/
+/*======== exe.c ========*/
 
 /* Execute a command with its entire path */
 int execute(data_of_program *data);
