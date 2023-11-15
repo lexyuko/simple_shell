@@ -36,7 +36,7 @@ int get_line(data_of_program *data)
 		{
 			command_array[x] = str_duplicate(_strtok(x ? NULL : buff, "\n;"));
 			/*checks and splxt for && and || operators*/
-			i = _checks_all_logic_ops(command_array, x, array_of_operators);
+			x = _checks_all_logic_ops(command_array, x, array_of_operators);
 		} while (command_array[x++]);
 	}
 

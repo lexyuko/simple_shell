@@ -50,7 +50,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
 
-	data->programe_name = argv[0];
+	data->program_name = argv[0];
 	data->input_line = NULL;
 	data->command_name = NULL;
 	data->exec_counter = 0;
@@ -66,7 +66,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 			data->file_descriptor = open(argv[1], O_RDONLY);
 			if (data->file_descriptor == -1)
 			{
-				_printe(data->programe_name);
+				_printe(data->program_name);
 				_printe(": 0: Can't open ");
 				_printe(argv[1]);
 				_printe("\n");
@@ -76,7 +76,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 
 		default:
 			_printe("Usage: ");
-			_printe(data->programe_name);
+			_printe(data->program_name);
 			_printe(" [file]\n");
 			exit(1);
 	}
@@ -88,7 +88,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	{
 		for (; env[i]; i++)
 		{
-			data->env[i] = strDuplicate(env[i]);
+			data->env[i] = str_duplicate(env[i]);
 		}
 	}
 	data->env[i] = NULL;
@@ -106,7 +106,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
  * @prompt: Prompt to be printed.
  * @data: Program data structure.
  */
-void sisifo(char *prompt, data_of program *data)
+void sisifo(char *prompt, data_of_program *data)
 {
 	int errorCode = 0, stringLen = 0;
 
