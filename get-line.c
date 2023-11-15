@@ -3,13 +3,20 @@
 #define MAX_COMMANDS 10
 #define MAX_OPERATORS 10
 
+/**
+ * readCommandline- read one line from the prompt.
+ * @data: struct for the program's data
+ *
+ * Return: reading counting bytes.
+ */
 int readCommandLine(ProgramData *data);
 void freeCommandArray(char *commandArray[], int size);
 int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]);
 void shiftArrayElements(char *commandArray[], char operatorArray[], int size);
 int findLogicalOperators(char *command);
 
-int readCommandLine(ProgramData *data) {
+int readCommandLine(ProgramData *data)
+{
     char buffer[BUFFER_SIZE] = {'\0'};
     char *commandArray[MAX_COMMANDS] = {NULL};
     char operatorArray[MAX_OPERATORS] = {'\0'};
@@ -17,12 +24,14 @@ int readCommandLine(ProgramData *data) {
     int x = 0;
 
     if (commandArray[0] || (operatorArray[0] == '&' && data->errorNo != 0) ||
-        (operatorArray[0] == '|' && data->errorNo == 0)) {
+        (operatorArray[0] == '|' && data->errorNo == 0))
+    {
         freeCommandArray(commandArray, MAX_COMMANDS);
     }
 
     bytesRead = read(data->file_descriptor, buffer, BUFFER_SIZE - 1);
-    if (bytesRead == 0) {
+    if (bytesRead == 0)
+    {
         return -1;
     }
 
@@ -34,22 +43,27 @@ int readCommandLine(ProgramData *data) {
     return strLength(data->line_input);
 }
 
-void freeCommandArray(char *commandArray[], int size) {
-    for (int i = 0; i < size; i++) {
-        if (commandArray[i] != NULL) {
+void freeCommandArray(char *commandArray[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (commandArray[i] != NULL)
+        {
             free(commandArray[i]);
             commandArray[i] = NULL;
         }
     }
 }
 
-int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]) {
+int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[])
+{
     int x = 0;
     char *token;
 
     // Tokenize the input buffer
     token = strtok(buffer, " \n;");
-    while (token != NULL) {
+    while (token != NULL)
+    {
         commandArray[x] = duplicateStr(token);
         operatorArray[x] = findLogicalOperators(commandArray[x]);
         token = strtok(NULL, " \n;");
@@ -59,12 +73,17 @@ int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char
     return x;
 }
 
-int findLogicalOperators(char *command) {
+int findLogicalOperators(char *command)
+{
     int i = 0;
-    while (command[i] != '\0') {
-        if (command[i] == '&' && command[i + 1] == '&') {
+    while (command[i] != '\0')
+    {
+        if (command[i] == '&' && command[i + 1] == '&')
+        {
             return '&';
-        } else if (command[i] == '|' && command[i + 1] == '|') {
+        }
+        else if (command[i] == '|' && command[i + 1] == '|')
+        {
             return '|';
         }
         i++;
@@ -72,8 +91,10 @@ int findLogicalOperators(char *command) {
     return '\0';
 }
 
-void shiftArrayElements(char *commandArray[], char operatorArray[], int size) {
-    for (int i = 0; i < size; i++) {
+void shiftArrayElements(char *commandArray[], char operatorArray[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
         commandArray[i] = commandArray[i + 1];
         operatorArray[i] = operatorArray[i + 1];
     }
