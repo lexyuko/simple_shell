@@ -50,23 +50,23 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
 
-	data->programName = argv[0];
-	data->inputLine = NULL;
-	data->commandName = NULL;
-	data->execCounter = 0;
+	data->programe_name = argv[0];
+	data->input_line = NULL;
+	data->command_name = NULL;
+	data->exec_counter = 0;
 
 	/* Define the file descriptor to be read */
 	switch (argc)
 	{
 		case 1:
-			data->fileDescriptor = STDIN_FILENO;
+			data->file_descriptor = STDIN_FILENO;
 			break;
 
 		case 2:
-			data->fileDescriptor = open(argv[1], O_RDONLY);
-			if (data->fileDescriptor == -1)
+			data->file_descriptor = open(argv[1], O_RDONLY);
+			if (data->file_descriptor == -1)
 			{
-				_printe(data->programName);
+				_printe(data->programe_name);
 				_printe(": 0: Can't open ");
 				_printe(argv[1]);
 				_printe("\n");
@@ -76,7 +76,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 
 		default:
 			_printe("Usage: ");
-			_printe(data->programName);
+			_printe(data->programe_name);
 			_printe(" [file]\n");
 			exit(1);
 	}
@@ -94,10 +94,10 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	data->env[i] = NULL;
 	env = data->env;
 
-	data->aliasList = malloc(sizeof(char *) * 20);
+	data->alias_list = malloc(sizeof(char *) * 20);
 	for (i = 0; i < 20; i++)
 	{
-		data->aliasList[i] = NULL;
+		data->alias_list[i] = NULL;
 	}
 }
 
@@ -110,7 +110,7 @@ void sisifo(char *prompt, data_of program *data)
 {
 	int errorCode = 0, stringLen = 0;
 
-	for (data->execCounter = 1;; ++(data->execCounter))
+	for (data->exec_counter = 1;; ++(data->exec_counter))
 	{
 		_print(prompt);
 		errorCode = stringLen = _getline(data);

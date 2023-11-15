@@ -27,7 +27,7 @@ int get_line(data_of_program *data)
 
 		/* read from the file descriptor int to buff */
 		bytes_to_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
-		if (bytes_tp_read == 0)
+		if (bytes_to_read == 0)
 			return (-1);
 
 		/* split lines for \n or ; */
