@@ -69,15 +69,10 @@ void handle_ctrl_c(int opr UNUSED);
 /*========  get-line.c  ========*/
 
 /* Read one line of the standar input*/
-int readCommandLine(data_of_program *data);
+int get_line(data_of_program *data);
 
 /* split the each line for the logical operators if it exist */
-int parseAndSplitCommands(char *commandArray[], char operatorArray[], const char buffer[]);
-void shiftArrayElements(char *commandArray[], char operatorArray[], int size);
-int findLogicalOperators(char *command);
-
-/*free the command line*/
-void freeCommandArray(char *commandArray[], int size);
+int _checks_all_logic_ops(char *command_array[], int x, char array_of_operators[]);
 
 /*======== expansions.c ========*/
 
