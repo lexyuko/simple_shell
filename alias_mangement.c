@@ -90,7 +90,7 @@ int setAlias(const char *aliasString, data_of_program *data)
 		if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
 		{
 			free(data->alias_list[i]);
-			data->alias_list[i] = strDuplicate(aliasString);
+			data->alias_list[i] = str_duplicate(aliasString);
 			return 0;
 		}
 
@@ -98,7 +98,7 @@ int setAlias(const char *aliasString, data_of_program *data)
 	}
 
 	// If no match is found, add the new alias to the list
-	data->alias_list[data->aliasCount++] = strDuplicate(aliasString);
+	data->alias_list[data->aliasCount++] = str_duplicate(aliasString);
 
 	return 0;
 }

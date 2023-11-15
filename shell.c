@@ -9,7 +9,7 @@
  */
 int main(int argc, char *argv[], char *env[])
 {
-	data_of program dataStruct = {NULL}, *data = &dataStruct;
+	data_of_program dataStruct = {NULL}, *data = &dataStruct;
 	char *prompt = "";
 
 	initialize_Data(data, argc, argv, env);
@@ -46,7 +46,7 @@ void handle_Ctrl_C(int signal UNUSED)
  * @argv: Array of arguments passed to the program.
  * @env: Environment passed to the program.
  */
-void initialize_Data(data_of program *data, int argc, char *argv[], char **env)
+void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
 

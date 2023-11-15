@@ -27,7 +27,7 @@ int get_line(data_of_program *data)
 
 		/* read from the file descriptor int to buff */
 		bytes_to_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
-		if (bytes_read == 0)
+		if (bytes_tp_read == 0)
 			return (-1);
 
 		/* split lines for \n or ; */
@@ -36,7 +36,7 @@ int get_line(data_of_program *data)
 		{
 			command_array[x] = str_duplicate(_strtok(x ? NULL : buff, "\n;"));
 			/*checks and splxt for && and || operators*/
-			i = _checks_logic_ops(command_array, x, array_of_operators);
+			i = _checks_all_logic_ops(command_array, x, array_of_operators);
 		} while (command_array[x++]);
 	}
 
