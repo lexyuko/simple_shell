@@ -11,7 +11,7 @@ int get_line(data_of_program *data)
 	char buff[BUFFER_SIZE] = {'\0'};
 	static char *command_array[10] = {NULL};
 	static char array_of_operators[10] = {'\0'};
-	ssize_t bytes_to_read, i = 0;
+	ssize_t bytes_to_read, x = 0;
 
 	/* check if doesnot exist more commands in the array */
 	/* and checks the logical operators */
@@ -22,11 +22,11 @@ int get_line(data_of_program *data)
 		for (x = 0; command_array[x]; x++)
 		{
 			free(command_array[x]);
-			command_array[i] = NULL;
+			command_array[x] = NULL;
 		}
 
 		/* read from the file descriptor int to buff */
-		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
+		bytes_to_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
 		if (bytes_read == 0)
 			return (-1);
 
@@ -36,7 +36,7 @@ int get_line(data_of_program *data)
 		{
 			command_array[x] = str_duplicate(_strtok(x ? NULL : buff, "\n;"));
 			/*checks and splxt for && and || operators*/
-			i = check_logic_ops(command_array, x, array_of_operators);
+			i = _checks_logic_ops(command_array, x, array_of_operators);
 		} while (command_array[x++]);
 	}
 
@@ -65,7 +65,7 @@ int _checks_all_logic_ops(char *command_array[], int x, char array_of_operators[
 	int y;
 
 	/* checks for the & char in the command lxne*/
-	for (y = 0; command_array[x] != NULL && command_array[i][y]; y++)
+	for (y = 0; command_array[x] != NULL && command_array[x][y]; y++)
 	{
 		if (command_array[x][y] == '&' && command_array[x][y + 1] == '&')
 		{

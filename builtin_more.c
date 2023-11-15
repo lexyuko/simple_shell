@@ -41,7 +41,7 @@ int builtin_cd(data_of_program *data)
 		{
 			dir_old = env_get_key("OLDPWD", data);
 			if (dir_old)
-				error_code = set_work_directory(data, dir_old);
+				err_code = set_work_directory(data, dir_old);
 			_print(env_get_key("PWD", data));
 			_print("\n");
 
@@ -109,7 +109,7 @@ int builtin_help(data_of_program *data)
 	}
 	if (data->tokens[2] != NULL)
 	{
-		errno = 2LARGE;
+		errno = E2BIG;
 		perror(data->command_name);
 		return (5);
 	}
@@ -119,7 +119,7 @@ int builtin_help(data_of_program *data)
 	Info[4] = HELP_UNSETENV_MSG;
 	Info[5] = HELP_CD_MSG;
 
-	for (j = 0; Info[i]; j++)
+	for (j = 0; Info[j]; j++)
 	{
 		/*print the length of string */
 		length = str_length(data->tokens[1]);

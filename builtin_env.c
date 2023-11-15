@@ -21,9 +21,9 @@ int _builtin_env(data_of_program *data)
 		{
 			if (data->tokens[1][x] == '=')
 			{
-				var_copy = str_duplicate(env_get_key(c_name, data));
+				key_copy = str_duplicate(env_get_key(c_name, data));
 
-				if (var_copy != NULL)
+				if (key_copy != NULL)
 				{
 					env_set_key(c_name, data->tokens[1] + x + 1, data);
 				}
@@ -37,8 +37,8 @@ int _builtin_env(data_of_program *data)
 				}
 				else
 				{
-					env_set_key(c_name, var_copy, data);
-					free(var_copy);
+					env_set_key(c_name, key_copy, data);
+					free(key_copy);
 				}
 
 				return 0;

@@ -14,31 +14,21 @@ int builtins_list(data_of_program *data)
 		{"help", builtin_help},
 		{"cd", builtin_cd},
 		{"alias", builtin_alias},
-		{"env", builtin_env},
-		{"setenv", builtin_set_env},
-		{"unsetenv", builtin_unset_env},
-		{NULL, NULL}
-	};
+		{"env", _builtin_env},
+		{"setenv", _builtin_set_env},
+		{"unsetenv", _builtin_unset_env},
+		{NULL, NULL}};
 
 	/*walk through the structure*/
-	iterator = 0;
-	while (options[iterator].builtin != NULL)
+	for (iterator = 0; options[iterator].builtin != NULL; iterator++)
 	{
+		/*if there is a match between the given command and a builtin,*/
 		if (str_compare(options[iterator].builtin, data->command_name, 0))
 		{
-			switch (iterator)
-			{
-				case 0:
-					return option_0_function(data);
-					// Add more cases for each option if needed
-					// case 1:
-					//     return option_1_function(data);
-					// ...
-				default:
-					return -1;
-			}
+			/*execute the function, and return the return value of the function*/
+			return (options[iterator].function(data));
 		}
-		iterator++;
+		/*if there is no match return -1 */
 	}
 
 	return (-1);

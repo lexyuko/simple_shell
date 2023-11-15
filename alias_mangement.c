@@ -8,14 +8,14 @@
  */
 int printAlias(data_of_program *data, const char *aliasName)
 {
-	if (data->aliasList)
+	if (data->alias_list)
 	{
 		const size_t aliasNameLength = strlen(aliasName);
 
 		size_t i = 0;
-		while (data->aliasList[i])
+		while (data->alias_list[i])
 		{
-			const char *currentAlias = data->aliasList[i];
+			const char *currentAlias = data->alias_list[i];
 
 			if (!aliasName || (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '='))
 			{
@@ -38,7 +38,7 @@ int printAlias(data_of_program *data, const char *aliasName)
  */
 const char *getAlias(data_of_program *data, const char *aliasName)
 {
-	if (aliasName != NULL || data->aliasList != NULL)
+	if (aliasName != NULL || data->alias_list != NULL)
 	{
 		return NULL;
 	}
@@ -46,9 +46,9 @@ const char *getAlias(data_of_program *data, const char *aliasName)
 	const size_t aliasNameLength = strlen(aliasName);
 
 	size_t i = 0;
-	while (data->aliasList[i])
+	while (data->alias_list[i])
 	{
-		const char *currentAlias = data->aliasList[i];
+		const char *currentAlias = data->alias_list[i];
 
 		if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
 		{
@@ -69,7 +69,7 @@ const char *getAlias(data_of_program *data, const char *aliasName)
  */
 int setAlias(const char *aliasString, data_of_program *data)
 {
-	if (aliasString == NULL || data->aliasList == NULL)
+	if (aliasString == NULL || data->alias_list == NULL)
 	{
 		return 1;
 	}
@@ -81,16 +81,16 @@ int setAlias(const char *aliasString, data_of_program *data)
 	{
 		return 1;
 	}
-
+	const size_t aliasNameLength = strlen(aliasName);
 	size_t i = 0;
-	while (data->aliasList[i])
+	while (data->alias_list[i])
 	{
-		char *currentAlias = data->aliasList[i];
+		char *currentAlias = data->alias_list[i];
 
 		if (strncmp(currentAlias, aliasName, aliasNameLength) == 0 && currentAlias[aliasNameLength] == '=')
 		{
-			free(data->aliasList[i]);
-			data->aliasList[i] = strDuplicate(aliasString);
+			free(data->alias_list[i]);
+			data->alias_list[i] = strDuplicate(aliasString);
 			return 0;
 		}
 
@@ -98,7 +98,7 @@ int setAlias(const char *aliasString, data_of_program *data)
 	}
 
 	// If no match is found, add the new alias to the list
-	data->aliasList[data->aliasCount++] = strDuplicate(aliasString);
+	data->alias_list[data->aliasCount++] = strDuplicate(aliasString);
 
 	return 0;
 }

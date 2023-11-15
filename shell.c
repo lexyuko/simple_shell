@@ -9,12 +9,12 @@
  */
 int main(int argc, char *argv[], char *env[])
 {
-	ProgramData dataStruct = {NULL}, *data = &dataStruct;
+	data_of program dataStruct = {NULL}, *data = &dataStruct;
 	char *prompt = "";
 
-	initializeData(data, argc, argv, env);
+	initialize_Data(data, argc, argv, env);
 
-	signal(SIGINT, handleCtrlC);
+	signal(SIGINT, handle_Ctrl_C);
 
 	if (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO) && argc == 1)
 	{
@@ -30,23 +30,23 @@ int main(int argc, char *argv[], char *env[])
 }
 
 /**
- * handleCtrlC - Handle SIGINT (Ctrl+C) signal.
+ * handle_Ctrl_C - Handle SIGINT (Ctrl+C) signal.
  * @signal: Signal value (UNUSED).
  */
-void handleCtrlC(int signal UNUSED)
+void handle_Ctrl_C(int signal UNUSED)
 {
 	_print("\n");
 	_print(PROMPT_MSG);
 }
 
 /**
- * initializeData - Initialize the structure with program information.
+ * initialize_Data - Initialize the structure with program information.
  * @data: Pointer to the program's data structure.
  * @argc: Number of command line arguments.
  * @argv: Array of arguments passed to the program.
  * @env: Environment passed to the program.
  */
-void initializeData(ProgramData *data, int argc, char *argv[], char **env)
+void initialize_Data(data_of program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
 
@@ -106,7 +106,7 @@ void initializeData(ProgramData *data, int argc, char *argv[], char **env)
  * @prompt: Prompt to be printed.
  * @data: Program data structure.
  */
-void sisifo(char *prompt, ProgramData *data)
+void sisifo(char *prompt, data_of program *data)
 {
 	int errorCode = 0, stringLen = 0;
 

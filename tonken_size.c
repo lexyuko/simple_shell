@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * tokenize - Tokenizes the input string, separating it into an array of tokens using a specified delimiter.
+ * tokenize - Tokenizes the input string, separating it into an array of tokens using a specified delim.
  *
  * @data: Pointer to the program's data.
  *
@@ -16,7 +16,7 @@
 
 void tokenize(data_of_program *data)
 {
-	const char *delimiter = " \t";
+	const char *delim = " \t";
 	char *token, *input_copy;
 	int counter = 0;
 
@@ -33,11 +33,11 @@ void tokenize(data_of_program *data)
 		exit(errno);
 	}
 
-	token = _strtok(input_copy, delimiter);
+	token = _strtok(input_copy, delim);
 	while (token != NULL)
 	{
 		counter++;
-		token = _strtok(NULL, delimiter);
+		token = _strtok(NULL, delim);
 	}
 
 	free(input_copy);
@@ -51,7 +51,7 @@ void tokenize(data_of_program *data)
 	}
 
 	// Tokenize the input
-	token = _strtok(data->input_line, delimiter);
+	token = _strtok(data->input_line, delim);
 	counter = 0;
 	while (token != NULL)
 	{
@@ -63,7 +63,7 @@ void tokenize(data_of_program *data)
 		}
 
 		counter++;
-		token = _strtok(NULL, delimiter);
+		token = _strtok(NULL, delim);
 	}
 
 	// Set the last element of the tokens array to NULL
