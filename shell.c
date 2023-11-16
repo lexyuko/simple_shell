@@ -73,16 +73,13 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 			exit(127);
 		}
 		break;
-
 	default:
 		_printe("Usage: ");
 		_printe(data->program_name);
 		_printe(" [file]\n");
 		exit(1);
 	}
-
 	data->tokens = NULL;
-
 	data->env = malloc(sizeof(char *) * 50);
 	if (env)
 	{
@@ -93,7 +90,6 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	}
 	data->env[i] = NULL;
 	env = data->env;
-
 	data->alias_list = malloc(sizeof(char *) * 20);
 	for (i = 0; i < 20; i++)
 	{
