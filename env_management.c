@@ -99,7 +99,7 @@ char *env_get_key(char *key, data_of_program *data)
 		{
 			/* Validate arguments*/
 			if (key == NULL || data->env == NULL)
-				return 0;
+				return (0);
 
 			/* Obtain the length of the variable requested*/
 			size_t key_length = str_length(key);
