@@ -7,38 +7,38 @@
  * Return: A pointer to the created token
  */
 
-char *_strtok(char *line, const char *delim)
+char *_strtok(char *line, char *delim)
 {
-	if (!line || !(*line))
-		return NULL;
+	int c;
+	static char *n_str;
+	char *token;
 
-	char *start = line;
-	char *token = NULL;
-
-	// Find the beginning of the next token
-	while (*start && strchr(delim, *start))
-		start++;
-
-	//if no more tokens return NULL
-	if (!*start)
+	if (line != NULL)
+		n_str = line;
+	for (; *n_str != '\0'; n_str++)
 	{
-		*line = '\0';
-		return NULL;
+		for (c = 0; delim[c] != '\0'; c++)
+		{
+			if (*n_str == delim[c])
+			break;
+		}
+		if (delim[c] == '\0')
+			break;
 	}
-
-	token = start;
-
-	//Find token end
-	while (*start && !strchr(delim, *start))
-		start++;
-
-	if (*start)
+	token = n_str;
+	if (*token == '\0')
+		return (NULL);
+	for (; *n_str != '\0'; n_str++)
 	{
-		*start = '\0';
-		start++;
+		for (c = 0; delim[c] != '\0'; c++)
+		{
+			if (*n_str == delim[c])
+			{
+				*n_str = '\0';
+				str++;
+				return (token);
+			}
+		}
 	}
-
-	*line = start;
-
-	return token;
+	return (token);
 }
