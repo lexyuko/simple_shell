@@ -7,7 +7,7 @@
  * Return: A pointer to the created token
  */
 
-char *_strtok(char *line, char *delim)
+char *_strtok(char *line, const char *delim)
 {
 	int c;
 	static char *n_str;
@@ -20,7 +20,7 @@ char *_strtok(char *line, char *delim)
 		for (c = 0; delim[c] != '\0'; c++)
 		{
 			if (*n_str == delim[c])
-			break;
+				break;
 		}
 		if (delim[c] == '\0')
 			break;
@@ -35,7 +35,7 @@ char *_strtok(char *line, char *delim)
 			if (*n_str == delim[c])
 			{
 				*n_str = '\0';
-				str++;
+				n_str++;
 				return (token);
 			}
 		}
