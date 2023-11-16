@@ -31,7 +31,7 @@ int main(int argc, char *argv[], char *env[])
 
 /**
  * handle_Ctrl_C - Handle SIGINT (Ctrl+C) signal.
- * @signal: Signal value (UNUSED).
+ * @UNUSED: Signal value (UNUSED).
  */
 void handle_Ctrl_C(int signal UNUSED)
 {
