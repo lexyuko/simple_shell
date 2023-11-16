@@ -58,27 +58,27 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	/* Define the file descriptor to be read */
 	switch (argc)
 	{
-	case 1:
-		data->file_descriptor = STDIN_FILENO;
-		break;
+		case 1:
+			data->file_descriptor = STDIN_FILENO;
+			break;
 
-	case 2:
-		data->file_descriptor = open(argv[1], O_RDONLY);
-		if (data->file_descriptor == -1)
-		{
+		case 2:
+			data->file_descriptor = open(argv[1], O_RDONLY);
+			if (data->file_descriptor == -1)
+			{
+				_printe(data->program_name);
+				_printe(": 0: Can't open ");
+				_printe(argv[1]);
+				_printe("\n");
+				exit(127);
+			}
+			break;
+
+		default:
+			_printe("Usage: ");
 			_printe(data->program_name);
-			_printe(": 0: Can't open ");
-			_printe(argv[1]);
-			_printe("\n");
-			exit(127);
-		}
-		break;
-
-	default:
-		_printe("Usage: ");
-		_printe(data->program_name);
-		_printe(" [file]\n");
-		exit(1);
+			_printe(" [file]\n");
+			exit(1);
 	}
 
 	data->tokens = NULL;
@@ -113,7 +113,7 @@ void sisifo(char *prompt, data_of_program *data)
 	for (data->exec_counter = 1;; ++(data->exec_counter))
 	{
 		_print(prompt);
-		errorCode = _stringLen = getline(data);
+		errorCode = _stringLen = get_line(data);
 
 		if (errorCode == EOF)
 		{
@@ -128,9 +128,9 @@ void sisifo(char *prompt, data_of_program *data)
 			tokenize(data);
 			if (data->tokens[0])
 			{ /* if a text is given to prompt, execute */
-				error_code = execute(data);
-				if (error_code != 0)
-					_print_error(error_code, data);
+				errorCode = execute(data);
+				if (errorCode != 0)
+					_print_error(errorCode, data);
 			}
 			free_recurrent_data(data);
 		}
