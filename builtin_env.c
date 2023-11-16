@@ -27,9 +27,7 @@ int _builtin_env(data_of_program *data)
 				{
 					env_set_key(c_name, data->tokens[1] + x + 1, data);
 				}
-
 				print_environ(data);
-
 				if (env_get_key(c_name, data) == NULL)
 				{
 					_print(data->tokens[1]);
@@ -40,8 +38,7 @@ int _builtin_env(data_of_program *data)
 					env_set_key(c_name, key_copy, data);
 					free(key_copy);
 				}
-
-				return 0;
+				return (0);
 			}
 			c_name[x] = data->tokens[1][x];
 		}
@@ -49,8 +46,7 @@ int _builtin_env(data_of_program *data)
 		perror(data->command_name);
 		errno = 127;
 	}
-
-	return 0;
+	return (0);
 }
 
 /**
@@ -69,7 +65,7 @@ int _builtin_set_env(data_of_program *data)
 
 	env_set_key(data->tokens[1], data->tokens[2], data);
 
-	return 0;
+	return (0);
 }
 
 /**
@@ -88,5 +84,5 @@ int _builtin_unset_env(data_of_program *data)
 
 	env_remove_key(data->tokens[1], data);
 
-	return 0;
+	return (0);
 }

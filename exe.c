@@ -8,17 +8,18 @@ int execute(data_of_program *data)
 {
 	int status;
 
-	// Check for built-in programs
+	/* Check for built-in programs*/
 	if (builtins_list(data) != -1)
-		return 0;
+		return (0);
 
-	// Check for program in the file system
+	/* Check for program in the file system*/
 	if (find_program(data) != 0)
-		return 0;
+		return (0);
 
-	// Fork a child process
+	/* Fork a child process*/
 	pid_t child_pid = fork();
 	if (child_pid == -1)
+	
 	{
 		perror(data->command_name);
 		exit(EXIT_FAILURE);
@@ -26,16 +27,16 @@ int execute(data_of_program *data)
 
 	if (child_pid == 0)
 	{
-		// Child process: execute the program
+		/* Child process: execute the program*/
 		execve(data->tokens[0], data->tokens, data->env);
 
-		// If execve fails
+		/* If execve fails*/
 		perror(data->command_name);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		// Parent process: wait for the child and check exit status
+		/* Parent process: wait for the child and check exit status*/
 		waitpid(child_pid, &status, 0);
 
 		if (WIFEXITED(status))
@@ -44,5 +45,5 @@ int execute(data_of_program *data)
 			errno = 128 + WTERMSIG(status);
 	}
 
-	return 0;
+	return (0);
 }

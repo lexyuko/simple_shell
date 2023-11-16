@@ -10,7 +10,7 @@
 int _print(char *string)
 {
 	ssize_t result = write(STDOUT_FILENO, string, str_length(string));
-	return result;
+	return (result);
 }
 /**
  * _printe - Writes an array of characters to the standard error.
@@ -21,7 +21,7 @@ int _print(char *string)
 int _printe(char *string)
 {
 	ssize_t result = write(STDERR_FILENO, string, str_length(string));
-	return result;
+	return (result);
 }
 
 /**
@@ -34,9 +34,7 @@ int _printe(char *string)
 int _print_error(int errorcode, data_of_program *data)
 {
 	char n_as_string[10] = {'\0'};
-
 	long_to_string((long)data->exec_counter, n_as_string, 10);
-
 	switch (errorcode)
 	{
 		case 2:
@@ -53,7 +51,6 @@ int _print_error(int errorcode, data_of_program *data)
 			_printe(data->tokens[1]);
 			_printe("\n");
 			break;
-
 		case 127:
 			_printe(data->program_name);
 			_printe(": ");
@@ -62,7 +59,6 @@ int _print_error(int errorcode, data_of_program *data)
 			_printe(data->command_name);
 			_printe(": not found\n");
 			break;
-
 		case 126:
 			_printe(data->program_name);
 			_printe(": ");
@@ -71,11 +67,9 @@ int _print_error(int errorcode, data_of_program *data)
 			_printe(data->command_name);
 			_printe(": Permission denied\n");
 			break;
-
-			// Add more cases if needed
-
-		default:
-			// Handle other error codes
+			/* Add more cases if needed*/
+		default :
+			/* Handle other error codes*/
 			break;
 	}
 

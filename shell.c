@@ -49,19 +49,15 @@ void handle_Ctrl_C(int sgnl UNUSED)
 void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
-
 	data->program_name = argv[0];
 	data->input_line = NULL;
 	data->command_name = NULL;
 	data->exec_counter = 0;
-
-	/* Define the file descriptor to be read */
 	switch (argc)
 	{
 		case 1:
 			data->file_descriptor = STDIN_FILENO;
 			break;
-
 		case 2:
 			data->file_descriptor = open(argv[1], O_RDONLY);
 			if (data->file_descriptor == -1)
@@ -73,7 +69,6 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 				exit(127);
 			}
 			break;
-
 		default:
 			_printe("Usage: ");
 			_printe(data->program_name);
@@ -82,7 +77,7 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	}
 	data->tokens = NULL;
 	data->env = malloc(sizeof(char *) * 50);
-	if (env)
+	igf (env)
 	{
 		for (; env[i]; i++)
 		{

@@ -20,12 +20,12 @@ void tokenize(data_of_program *data)
 	char *token, *input_copy;
 	int counter = 0;
 
-	// Remove newline character if present
+	
 	size_t length = str_length(data->input_line);
 	if (length > 0 && data->input_line[length - 1] == '\n')
 		data->input_line[length - 1] = '\0';
 
-	// Count the number of tokens
+
 	input_copy = str_duplicate(data->input_line);
 	if (input_copy == NULL)
 	{
@@ -42,7 +42,7 @@ void tokenize(data_of_program *data)
 
 	free(input_copy);
 
-	// Allocate memory for tokens
+	
 	data->tokens = malloc((counter + 1) * sizeof(char *));
 	if (data->tokens == NULL)
 	{
@@ -50,7 +50,7 @@ void tokenize(data_of_program *data)
 		exit(errno);
 	}
 
-	// Tokenize the input
+	
 	token = _strtok(data->input_line, delim);
 	counter = 0;
 	while (token != NULL)
@@ -66,10 +66,9 @@ void tokenize(data_of_program *data)
 		token = _strtok(NULL, delim);
 	}
 
-	// Set the last element of the tokens array to NULL
+
 	data->tokens[counter] = NULL;
 
-	// Set the command name
 	data->command_name = (counter > 0) ? str_duplicate(data->tokens[0]) : NULL;
 }
 
