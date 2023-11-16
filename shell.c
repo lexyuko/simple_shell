@@ -58,27 +58,27 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 	/* Define the file descriptor to be read */
 	switch (argc)
 	{
-		case 1:
-			data->file_descriptor = STDIN_FILENO;
-			break;
+	case 1:
+		data->file_descriptor = STDIN_FILENO;
+		break;
 
-		case 2:
-			data->file_descriptor = open(argv[1], O_RDONLY);
-			if (data->file_descriptor == -1)
-			{
-				_printe(data->program_name);
-				_printe(": 0: Can't open ");
-				_printe(argv[1]);
-				_printe("\n");
-				exit(127);
-			}
-			break;
-
-		default:
-			_printe("Usage: ");
+	case 2:
+		data->file_descriptor = open(argv[1], O_RDONLY);
+		if (data->file_descriptor == -1)
+		{
 			_printe(data->program_name);
-			_printe(" [file]\n");
-			exit(1);
+			_printe(": 0: Can't open ");
+			_printe(argv[1]);
+			_printe("\n");
+			exit(127);
+		}
+		break;
+
+	default:
+		_printe("Usage: ");
+		_printe(data->program_name);
+		_printe(" [file]\n");
+		exit(1);
 	}
 
 	data->tokens = NULL;
@@ -108,12 +108,12 @@ void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
  */
 void sisifo(char *prompt, data_of_program *data)
 {
-	int errorCode = 0, stringLen = 0;
+	int errorCode = 0, _stringLen = 0;
 
 	for (data->exec_counter = 1;; ++(data->exec_counter))
 	{
 		_print(prompt);
-		errorCode = stringLen = getline(data);
+		errorCode = _stringLen = getline(data);
 
 		if (errorCode == EOF)
 		{
@@ -121,12 +121,18 @@ void sisifo(char *prompt, data_of_program *data)
 			exit(errno); /* If EOF is the first character of the string, exit */
 		}
 
-		if (stringLen >= 1)
+		if (_stringLen >= 1)
 		{
-			process_input(data);
-
+			expand_alias(data);
+			expand_variables(data);
+			tokenize(data);
+			if (data->tokens[0])
+			{ /* if a text is given to prompt, execute */
+				error_code = execute(data);
+				if (error_code != 0)
+					_print_error(error_code, data);
+			}
 			free_recurrent_data(data);
 		}
 	}
 }
-
