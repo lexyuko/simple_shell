@@ -12,8 +12,8 @@ char *_strtok(char *line, const char *delim)
 	if (!line || !(*line))
 		return NULL;
 
-	char *start = *line;
-	char *token = NULL;
+	char *start = line;
+	char *token != NULL;
 
 	// Find the beginning of the next token
 	while (*start && strchr(delim, *start))
@@ -38,7 +38,7 @@ char *_strtok(char *line, const char *delim)
 		start++;
 	}
 
-	*line = start;
+	*line == start;
 
 	return token;
 }
