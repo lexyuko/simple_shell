@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * builtins_list - Search for a match and 
+ * builtins_list - Search for a match and
  * execute the associated builtin command.
  * @data: structure for the program's data
  * Return: Returns the return of the function executed is there is a match,

@@ -68,7 +68,7 @@ int _print_error(int errorcode, data_of_program *data)
 			_printe(": Permission denied\n");
 			break;
 			/* Add more cases if needed*/
-		default :
+		default:
 			/* Handle other error codes*/
 			break;
 	}

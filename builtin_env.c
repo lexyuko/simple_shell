@@ -56,11 +56,13 @@ int _builtin_env(data_of_program *data)
  */
 int _builtin_set_env(data_of_program *data)
 {
-	if (data->tokens[1] == NULL || data->tokens[2] == NULL || data->tokens[3] != NULL)
+	if (data->tokens[1] == NULL || 
+	data->tokens[2] == NULL || 
+	data->tokens[3] != NULL)
 	{
 		errno = (data->tokens[3] != NULL) ? E2BIG : EINVAL;
 		perror(data->command_name);
-		return 5;
+		return (5);
 	}
 
 	env_set_key(data->tokens[1], data->tokens[2], data);
@@ -79,7 +81,7 @@ int _builtin_unset_env(data_of_program *data)
 	{
 		errno = (data->tokens[2] != NULL) ? E2BIG : EINVAL;
 		perror(data->command_name);
-		return 5;
+		return (5);
 	}
 
 	env_remove_key(data->tokens[1], data);

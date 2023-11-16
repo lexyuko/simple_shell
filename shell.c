@@ -49,6 +49,7 @@ void handle_Ctrl_C(int sgnl UNUSED)
 void initialize_Data(data_of_program *data, int argc, char *argv[], char **env)
 {
 	int i = 0;
+	
 	data->program_name = argv[0];
 	data->input_line = NULL;
 	data->command_name = NULL;

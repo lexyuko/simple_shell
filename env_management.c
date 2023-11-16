@@ -10,7 +10,7 @@ char *env_get_key(char *key, data_of_program *data)
 {
 	/* Validate arguments*/
 	if (key == NULL || data->env == NULL)
-		return NULL;
+		return (NULL);
 
 	/* Obtain the length of the variable requested*/
 	size_t key_length = str_length(key);
@@ -24,18 +24,19 @@ char *env_get_key(char *key, data_of_program *data)
 		if (str_compare(key, data->env[i], key_length) && data->env[i][key_length] == '=')
 		{
 			/* Return the value of the key NAME= when found*/
-			return data->env[i] + key_length + 1;
+			return (data->env[i] + key_length + 1);
 		}
 
 		i++;
 	}
 
 	/* Return NULL if the key is not found*/
-	return NULL;
+	return (NULL);
 }
 
 /**
- * env_set_key - sets or updates an environment variable with the specified key and value
+ * env_set_key - sets or updates an environment
+ * variable with the specified key and value
  * or create it if does not exist.
  * @key: the key of the variable to set
  * @value: The value to set for the environment variable

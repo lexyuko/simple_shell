@@ -54,9 +54,9 @@ int get_line(data_of_program *data)
  * _check_logic_ops - checks and split for && and || operators
  * @command_array: array of the commands.
  * @x: index in the command_array to be checked
- * @array_of_operators: array of the logical operators for each previous command
- *
- * Return: index of the last command in the command_array.
+ * @array_of_operators: array of the logical
+ * operators for each previous command
+ * Return: index of the last command in array.
  */
 int _checks_all_logic_ops(char *command_array[], int x, char array_of_operators[])
 {
