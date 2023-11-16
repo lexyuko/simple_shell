@@ -64,7 +64,7 @@ void initialize_Data(data_of_program *data, int arc, char *argv[], char **env);
 void sisifo(char *prompt, data_of_program *data);
 
 /* Print the prompt in a new line */
-void handle_Ctrl_C(int signal UNUSED);
+void handle_Ctrl_C(int sgnl UNUSED);
 
 /*========  get-line.c  ========*/
 
@@ -91,7 +91,7 @@ int buffer_add(char *buffer, char *str_to_add);
 void tokenize(data_of_program *data);
 
 /* Creates a pointer to a part of a string */
-char *_strtok(char **line, const char *delim);
+char *_strtok(char *line, const char *delim);
 
 /*======== exe.c ========*/
 
