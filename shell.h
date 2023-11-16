@@ -64,7 +64,7 @@ void initialize_Data(data_of_program *data, int arc, char *argv[], char **env);
 void sisifo(char *prompt, data_of_program *data);
 
 /* Print the prompt in a new line */
-void handle_Ctrl_C(int opr UNUSED);
+void handle_Ctrl_C(int signal UNUSED);
 
 /*========  get-line.c  ========*/
 
