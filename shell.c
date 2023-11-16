@@ -33,7 +33,7 @@ int main(int argc, char *argv[], char *env[])
  * handle_Ctrl_C - Handle SIGINT (Ctrl+C) signal.
  * @UNUSED: Signal value (UNUSED).
  */
-void handle_Ctrl_C(int signal UNUSED)
+void handle_Ctrl_C(int sgnl UNUSED)
 {
 	_print("\n");
 	_print(PROMPT_MSG);
