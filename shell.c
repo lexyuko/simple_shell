@@ -113,20 +113,20 @@ void sisifo(char *prompt, data_of_program *data)
 	for (data->exec_counter = 1;; ++(data->exec_counter))
 	{
 		_print(prompt);
-		errorCode = stringLen = _getline(data);
+		errorCode = stringLen = getline(data);
 
 		if (errorCode == EOF)
 		{
-			freeAllData(data);
+			free_all_data(data);
 			exit(errno); /* If EOF is the first character of the string, exit */
 		}
 
 		if (stringLen >= 1)
 		{
-			processInput(data);
+			process_input(data);
 
-			freeRecurrentData(data);
+			free_recurrent_data(data);
 		}
 	}
 }
-}
+

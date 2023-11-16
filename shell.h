@@ -91,7 +91,7 @@ int buffer_add(char *buffer, char *str_to_add);
 void tokenize(data_of_program *data);
 
 /* Creates a pointer to a part of a string */
-char *_strtok(char **str, const char *delim);
+char *_strtok(char *line, const char *delim);
 
 /*======== exe.c ========*/
 
