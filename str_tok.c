@@ -7,13 +7,15 @@
  * Return: A pointer to the created token
  */
 
-char *_strtok(char *line, const char *delim)
+
+char *_strtok(char **line, const char *delim)
 {
-	if (!line || !(*line))
+	if (line == NULL || *line == NULL || **line == '\0')
 		return NULL;
 
-	char *start = line;
-	char *token != NULL;
+	char *start = *line;
+	char *token = NULL;
+
 
 	// Find the beginning of the next token
 	while (*start && strchr(delim, *start))
@@ -22,7 +24,7 @@ char *_strtok(char *line, const char *delim)
 	// Return NULL if no more tokens
 	if (!*start)
 	{
-		*line = NULL;
+		**line = '\0';
 		return NULL;
 	}
 
@@ -38,7 +40,7 @@ char *_strtok(char *line, const char *delim)
 		start++;
 	}
 
-	*line == start;
+	*line = start;
 
 	return token;
 }
