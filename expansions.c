@@ -8,60 +8,60 @@
  */
 void expand_variables(data_of_program *data)
 {
-    int i = 0, j;
-    char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
+	int i = 0, j;
+	char line[BUFFER_SIZE] = {0}, expansion[BUFFER_SIZE] = {'\0'}, *temp;
 
-    if (data->input_line == NULL)
-        return;
+	if (data->input_line == NULL)
+		return;
 
-    buffer_add(line, data->input_line);
+	buffer_add(line, data->input_line);
 
-    while (line[i])
-    {
-        switch (line[i])
-        {
-        case '#':
-            line[i--] = '\0';
-            break;
-        case '$':
-            switch (line[i + 1])
-            {
-            case '?':
-                line[i] = '\0';
-                long_to_string(errno, expansion, 10);
-                buffer_add(line, expansion);
-                buffer_add(line, data->input_line + i + 2);
-                break;
-            case '$':
-                line[i] = '\0';
-                long_to_string(getpid(), expansion, 10);
-                buffer_add(line, expansion);
-                buffer_add(line, data->input_line + i + 2);
-                break;
-            case ' ':
-            case '\0':
-                break;
-            default:
-                for (j = 1; line[i + j] && line[i + j] != ' '; j++)
-                    expansion[j - 1] = line[i + j];
-                temp = env_get_key(expansion, data);
-                line[i] = '\0', expansion[0] = '\0';
-                buffer_add(expansion, line + i + j);
-                temp ? buffer_add(line, temp) : 1;
-                buffer_add(line, expansion);
-            }
-            break;
-        default:
-            break;
-        }
-        i++;
-    }
+	while (line[i])
+	{
+		switch (line[i])
+		{
+			case '#':
+				line[i--] = '\0';
+				break;
+			case '$':
+				switch (line[i + 1])
+				{
+					case '?':
+						line[i] = '\0';
+						long_to_string(errno, expansion, 10);
+						buffer_add(line, expansion);
+						buffer_add(line, data->input_line + i + 2);
+						break;
+					case '$':
+						line[i] = '\0';
+						long_to_string(getpid(), expansion, 10);
+						buffer_add(line, expansion);
+						buffer_add(line, data->input_line + i + 2);
+						break;
+					case ' ':
+					case '\0':
+						break;
+					default:
+						for (j = 1; line[i + j] && line[i + j] != ' '; j++)
+							expansion[j - 1] = line[i + j];
+						temp = env_get_key(expansion, data);
+						line[i] = '\0', expansion[0] = '\0';
+						buffer_add(expansion, line + i + j);
+						temp ? buffer_add(line, temp) : 1;
+						buffer_add(line, expansion);
+				}
+				break;
+			default:
+				break;
+		}
+		i++;
+	}
 
-    if (!str_compare(data->input_line, line, 0))
-    {
-        free(data->input_line);
-        data->input_line = str_duplicate(line);
-    }
+	if (!str_compare(data->input_line, line, 0))
+	{
+		free(data->input_line);
+		data->input_line = str_duplicate(line);
+	}
 }
 
 /**

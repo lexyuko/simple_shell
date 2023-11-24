@@ -7,6 +7,7 @@
 int execute(data_of_program *data)
 {
 	int status;
+	pid_t child_pid;
 
 	/* Check for built-in programs*/
 	if (builtins_list(data) != -1)
@@ -17,9 +18,9 @@ int execute(data_of_program *data)
 		return (0);
 
 	/* Fork a child process*/
-	pid_t child_pid = fork();
+	child_pid = fork();
+
 	if (child_pid == -1)
-	
 	{
 		perror(data->command_name);
 		exit(EXIT_FAILURE);

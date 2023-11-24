@@ -10,6 +10,7 @@
 int _print(char *string)
 {
 	ssize_t result = write(STDOUT_FILENO, string, str_length(string));
+
 	return (result);
 }
 /**
@@ -21,6 +22,7 @@ int _print(char *string)
 int _printe(char *string)
 {
 	ssize_t result = write(STDERR_FILENO, string, str_length(string));
+
 	return (result);
 }
 
@@ -33,8 +35,10 @@ int _printe(char *string)
  */
 int _print_error(int errorcode, data_of_program *data)
 {
+
 	char n_as_string[10] = {'\0'};
 	long_to_string((long)data->exec_counter, n_as_string, 10);
+
 	switch (errorcode)
 	{
 		case 2:

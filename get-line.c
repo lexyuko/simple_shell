@@ -58,7 +58,8 @@ int get_line(data_of_program *data)
  * operators for each previous command
  * Return: index of the last command in array.
  */
-int _checks_all_logic_ops(char *command_array[], int x, char array_of_operators[])
+int _checks_all_logic_ops(char *command_array[],
+		int x, char array_of_operators[])
 {
 	char *temp = NULL;
 	int y;

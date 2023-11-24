@@ -24,6 +24,7 @@ void tokenize(data_of_program *data)
 
 	size_t length = str_length(data->input_line);
 	if (length > 0 && data->input_line[length - 1] == '\n')
+
 		data->input_line[length - 1] = '\0';
 
 
